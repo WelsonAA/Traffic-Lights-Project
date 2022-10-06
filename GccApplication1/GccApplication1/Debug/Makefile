@@ -32,11 +32,13 @@ LIB_DEP:=
 LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
-SUBDIRS := 
+SUBDIRS :=  \
+../DIO\ Driver
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../DIO\ Driver/dio.c \
 ../main.c
 
 
@@ -47,15 +49,19 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+DIO\ Driver/dio.o \
 main.o
 
 OBJS_AS_ARGS +=  \
+"DIO Driver/dio.o" \
 main.o
 
 C_DEPS +=  \
+DIO\ Driver/dio.d \
 main.d
 
 C_DEPS_AS_ARGS +=  \
+"DIO Driver/dio.d" \
 main.d
 
 OUTPUT_FILE_PATH +=GccApplication1.elf
@@ -72,6 +78,13 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+DIO\ Driver/dio.o: ../DIO\ Driver/dio.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)D:\Edge Downloads\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Edge Downloads\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "D:\Edge Downloads\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./main.o: .././main.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0

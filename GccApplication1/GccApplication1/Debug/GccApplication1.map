@@ -7,6 +7,9 @@ Discarded input sections
 
  .data          0x00000000        0x0 D:/Edge Downloads/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .bss           0x00000000        0x0 D:/Edge Downloads/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
+ .text          0x00000000        0x0 DIO Driver/dio.o
+ .data          0x00000000        0x0 DIO Driver/dio.o
+ .bss           0x00000000        0x0 DIO Driver/dio.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -42,6 +45,7 @@ user_signatures  0x00850000         0x00000400         rw !x
 Linker script and memory map
 
 LOAD D:/Edge Downloads/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
+LOAD DIO Driver/dio.o
 LOAD main.o
 START GROUP
 LOAD d:/edge downloads/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a
@@ -152,7 +156,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000       0x92
+.text           0x00000000      0x31a
  *(.vectors)
  .vectors       0x00000000       0x54 D:/Edge Downloads/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
                 0x00000000                __vector_default
@@ -230,13 +234,19 @@ END GROUP
                 0x00000068                __vector_20
                 0x0000006c                . = ALIGN (0x2)
  *(.text.*)
- .text.main     0x0000006c       0x22 main.o
-                0x0000006c                main
-                0x0000008e                . = ALIGN (0x2)
+ .text.DIO_init
+                0x0000006c      0x14a DIO Driver/dio.o
+                0x0000006c                DIO_init
+ .text.DIO_write
+                0x000001b6      0x14a DIO Driver/dio.o
+                0x000001b6                DIO_write
+ .text.main     0x00000300       0x16 main.o
+                0x00000300                main
+                0x00000316                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000008e        0x0 d:/edge downloads/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x0000008e                _exit
-                0x0000008e                exit
+ .fini9         0x00000316        0x0 d:/edge downloads/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000316                _exit
+                0x00000316                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -255,11 +265,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000008e        0x4 d:/edge downloads/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000316        0x4 d:/edge downloads/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000092                _etext = .
+                0x0000031a                _etext = .
 
-.data           0x00800060        0x0 load address 0x00000092
+.data           0x00800060        0x0 load address 0x0000031a
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -277,8 +287,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
-                0x00000092                __data_load_start = LOADADDR (.data)
-                0x00000092                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000031a                __data_load_start = LOADADDR (.data)
+                0x0000031a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800060        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -326,8 +336,9 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 main.o
+ .comment       0x00000000       0x30 DIO Driver/dio.o
                                  0x31 (size before relaxing)
+ .comment       0x00000030       0x31 main.o
 
 .note.gnu.avr.deviceinfo
                 0x00000000       0x3c
@@ -349,41 +360,49 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0x20
+.debug_aranges  0x00000000       0x48
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x20 main.o
+                0x00000000       0x28 DIO Driver/dio.o
+ .debug_aranges
+                0x00000028       0x20 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x5f1
+.debug_info     0x00000000      0x67a
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 D:/Edge Downloads/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_info    0x000004e6      0x10b main.o
+ .debug_info    0x000004e6       0xc0 DIO Driver/dio.o
+ .debug_info    0x000005a6       0xd4 main.o
 
-.debug_abbrev   0x00000000      0x568
+.debug_abbrev   0x00000000      0x5a2
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 D:/Edge Downloads/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_abbrev  0x000004a3       0xc5 main.o
+ .debug_abbrev  0x000004a3       0x7e DIO Driver/dio.o
+ .debug_abbrev  0x00000521       0x81 main.o
 
-.debug_line     0x00000000      0x210
+.debug_line     0x00000000      0x2e5
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 D:/Edge Downloads/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_line    0x00000116       0xfa main.o
+ .debug_line    0x00000116      0x16d DIO Driver/dio.o
+ .debug_line    0x00000283       0x62 main.o
 
-.debug_frame    0x00000000       0x24
+.debug_frame    0x00000000       0x58
  *(.debug_frame)
- .debug_frame   0x00000000       0x24 main.o
+ .debug_frame   0x00000000       0x34 DIO Driver/dio.o
+ .debug_frame   0x00000034       0x24 main.o
 
-.debug_str      0x00000000      0x31e
+.debug_str      0x00000000      0x31f
  *(.debug_str)
  .debug_str     0x00000000      0x196 D:/Edge Downloads/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_str     0x00000196      0x188 main.o
-                                0x1bc (size before relaxing)
+ .debug_str     0x00000196      0x153 DIO Driver/dio.o
+ .debug_str     0x000002e9       0x36 main.o
+                                0x17c (size before relaxing)
 
-.debug_loc
+.debug_loc      0x00000000      0x268
  *(.debug_loc)
+ .debug_loc     0x00000000      0x268 DIO Driver/dio.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -403,9 +422,10 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x10
+.debug_ranges   0x00000000       0x28
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x10 main.o
+ .debug_ranges  0x00000000       0x18 DIO Driver/dio.o
+ .debug_ranges  0x00000018       0x10 main.o
 
 .debug_macro
  *(.debug_macro)

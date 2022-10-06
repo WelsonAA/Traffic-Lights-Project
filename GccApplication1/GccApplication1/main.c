@@ -5,15 +5,17 @@
  * Author : George Welson
  */ 
 
-#include <avr/io.h>
-#define F_CPU 1000000U
+#include "registers.h"
+#include "DIO Driver/dio.h"
+//#include <avr/io.h>
+#define F_CPU 1000000U //1MHz
+// delay unit is ms
 #include <util/delay.h>
 
 int main(void){
-	DDRB |=(1<<3);
+	DIO_init(PORT_A,4,OUT);
 	while(1){
-		PORTB ^= (1<<3);
-		_delay_ms(2000);
+		DIO_write(PORT_A,4,HIGH);
 	}
 }
 
